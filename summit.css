@@ -1,0 +1,76 @@
+p {
+  font-family: calibri;
+  font-size: 16;
+}
+
+blockquote {
+  font-family: calibri;
+  font-style: italic;
+}
+
+ul {
+  font-family: calibri;
+}
+
+ol {
+  font-family: calibri;
+}
+
+h1 {
+   color: #52B6E8;
+   font-weight: bold;
+   font-family: cambria;
+}
+
+h2 {
+  color: #52B6E8;
+  font-weight: bold;
+  font-family: cambria;
+}
+
+h3 {
+  color: #52B6E8;
+  font-weight: bold;
+  font-style: italic;
+  font-family: cambria;
+}
+
+h4 {
+  color: #52B6E8;
+  font-style: italic;
+  font-family: cambria;
+}
+
+h5 {
+  color: #52B6E8;
+  font-family: cambria;
+}
+
+h6 {
+  color: #52B6E8;
+  font-family: cambria;
+}
+
+.author {
+  color: rgb(109, 110, 114);
+  font-family: cambria;
+  font-weight: bold;
+}
+
+.date {
+  color: rgb(109, 110, 114);
+}
+
+th {
+  background-color: #52B6E8;
+  color: white;
+  font-weight: bold;
+}
+
+code {
+  font-family: lucida console;
+}
+
+tr.even {
+  background-color: rgb(198, 196, 198);
+}

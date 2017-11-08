@@ -1,0 +1,131 @@
+---
+title: "Bootstrapping"
+author: "Matt Duffy"
+date: "November 13, 2017"
+output: 
+  ioslides_presentation:
+    css: summit.css
+  
+---
+
+## Introduction and Agenda
+Our discussion today:
+
+- Motivation
+- Parametric vs Non-Parametric Methods
+- Statitistical Bootstrapping and Associated Use Cases
+- Q&A
+```{r, echo=FALSE, warning=FALSE, comment=FALSE, include=FALSE}
+library(tidyverse)
+library(gridExtra)
+
+```
+
+## Motivation
+Consider our estimates of the mean of a population using a sample distribution like the one below.
+
+```{r, echo = FALSE, fig.align='center'}
+set.seed(1234)
+z <- rnorm(1000, 0, 2)
+z <- data.frame(z)
+ggplot(z,aes(z)) +
+  geom_histogram(bins = 50) +
+  scale_y_continuous(limits = c(0,70))
+```
+
+## Motivation
+We can make some assumptions about this distribution. It looks like we're centered at a mean around 0, standard deviation is around 2 or 3. Here's an overlay of $\ N(0,2)$ 
+
+```{r, echo = FALSE, fig.align='center'}
+std <- 2
+mn <- 0
+ggplot(z,aes(z)) +
+  geom_histogram(bins = 50) +
+  stat_function(fun = function(x, mean, sd){
+    dnorm(x = x, mean = mn, sd = std) * 350
+    }, color = "blue")
+```
+
+## Motivation
+From the previous, we can reasonably use something like a z-test or a t-test to build our confidence intervals around the mean. But what if our data came from an unknown or unknowable probability distribution, or if we have small n?
+
+```{r, echo=FALSE, warning=FALSE, fig.height=4, fig.width=5, fig.align='center'}
+set.seed(1234)
+a <- c(rnorm(100000, 10, 2), runif(1000000, 2, 7), rgeom(1000000, .3))
+a <- data.frame(a)
+ggplot(a,aes(a)) +
+  geom_histogram(bins = 30) + 
+  scale_x_continuous(limits = c(-2,20))
+```
+
+## Parametric vs Non-Parametric Methods
+In our first example, where we have strong evidence that the population is normally distributed, we can use a *Parametric* method to estimate the confidence intervals around our sample estimate of $\mu$. 
+
+In our second example of an error distribution, we're forced to consider other methods. Here we can turn to *Non-Parametric* methods. We could use estimates that don't make assumptions about the underlying population distribution (something like a chi-square)
+
+OR, since we have the computational power to do so, we can use a resampling method. This is where bootstrapping comes into play. 
+
+## What is Bootstrapping?
+In statistics, bootstrapping is a resampling method that helps us understand estimates of population statistics, and can measure our confidence in those estimates. If you encounter a situation when you would prefer to ask a question of a population, but can't, and use a sample to answer that question, you should probably consider using bootstrapping to determine the behavior of the statistic and your confidence in that statistic. 
+
+Statistical Bootstrapping assumes that your sample of the population data mimics the behavior of the population data, meaning for some probability distribution $\ J$ our sample distribution $\hat{J}$ is a reasonable approximation of $\ J$.
+
+## What is the Advantage of Bootstrapping
+__Advantages__ 
+
+The bootstrap is simple. It allows the data to speak for itself, and makes limited assumptions.
+
+__Disadvantages__ 
+
+Some of the limited assumptions bootstrapping makes are quite important. For example, if samples are not independent, then a major assumption that underlies the bootstrap is violated.  
+
+## How Does Bootstrapping Work?
+1) Observe a sample from a population
+2) Resample (with replacement) from the original sample a number of times
+3) Use these bootstrapped replicates to make inferences about the population
+
+## What does this look like?
+I'm going to take a random sample of 30 from $\ N(0,1)$ and then show you the distribution of five resamplings
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+set.seed(1234)
+s <- rnorm(30)
+p <- sample(s, 30, replace = TRUE)
+q <- sample(s, 30, replace = TRUE)
+r <- sample(s, 30, replace = TRUE)
+u <- sample(s, 30, replace = TRUE)
+v <- sample(s, 30, replace = TRUE)
+plot_s <- ggplot(as.data.frame(s), aes(s)) +
+  geom_histogram(bins = 10) +
+  scale_x_continuous(limits=c(-3,3))
+plot_p <- ggplot(as.data.frame(p), aes(p)) +
+  geom_histogram(bins = 10) +
+  scale_x_continuous(limits=c(-3,3))
+plot_q <- ggplot(as.data.frame(q), aes(q)) +
+  geom_histogram(bins = 10) +
+  scale_x_continuous(limits=c(-3,3))
+plot_r <- ggplot(as.data.frame(r), aes(r)) +
+  geom_histogram(bins = 10) +
+  scale_x_continuous(limits=c(-3,3))
+plot_u <- ggplot(as.data.frame(u), aes(u)) +
+  geom_histogram(bins = 10) +
+  scale_x_continuous(limits=c(-3,3))
+plot_v <- ggplot(as.data.frame(v), aes(v)) +
+  geom_histogram(bins = 10) +
+  scale_x_continuous(limits=c(-3,3))
+grid.arrange(plot_s, plot_p, plot_q, plot_r, plot_u, plot_v, ncol = 3)
+ 
+```
+
+## Applications
+- Case Resampling (Monte Carlo or Exact) resamples from a distribution to estimate statistics like the sample mean
+- Residual Resampling (this is what we use in our work)
+- Smooth bootstrap (attaches random noise to observations in the data)
+- Bayesian bootstrap (reweights observations to create new data, and a series of posterior distributions)
+- Many others
+
+## Questions?
+<center> <img src="https://media2.giphy.com/media/1gRIKba9TWg9i/giphy.gif" width="500" height="300"> </center>
+
+
+
