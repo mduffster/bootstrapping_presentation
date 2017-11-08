@@ -4,7 +4,7 @@ author: "Matt Duffy"
 date: "November 13, 2017"
 output: 
   ioslides_presentation:
-    css: summit.css
+    css: custom.css
   
 ---
 
