@@ -89,30 +89,32 @@ I'm going to take a random sample of 30 from $\ N(0,1)$ and then show you the di
 
 ```{r, echo=FALSE, warning=FALSE, fig.align='center'}
 set.seed(1234)
-s <- rnorm(30)
-p <- sample(s, 30, replace = TRUE)
-q <- sample(s, 30, replace = TRUE)
-r <- sample(s, 30, replace = TRUE)
-u <- sample(s, 30, replace = TRUE)
-v <- sample(s, 30, replace = TRUE)
-plot_s <- ggplot(as.data.frame(s), aes(s)) +
-  geom_histogram(bins = 10) +
-  scale_x_continuous(limits=c(-3,3))
-plot_p <- ggplot(as.data.frame(p), aes(p)) +
-  geom_histogram(bins = 10) +
-  scale_x_continuous(limits=c(-3,3))
-plot_q <- ggplot(as.data.frame(q), aes(q)) +
-  geom_histogram(bins = 10) +
-  scale_x_continuous(limits=c(-3,3))
-plot_r <- ggplot(as.data.frame(r), aes(r)) +
-  geom_histogram(bins = 10) +
-  scale_x_continuous(limits=c(-3,3))
-plot_u <- ggplot(as.data.frame(u), aes(u)) +
-  geom_histogram(bins = 10) +
-  scale_x_continuous(limits=c(-3,3))
-plot_v <- ggplot(as.data.frame(v), aes(v)) +
-  geom_histogram(bins = 10) +
-  scale_x_continuous(limits=c(-3,3))
+samp_1 <- rnorm(30)
+
+rsmplr <- function(samp) {
+  sample(samp, 30, replace = TRUE)
+}
+
+samp_2 <- rsmplr(samp_1)
+samp_3 <- rsmplr(samp_1)
+samp_4 <- rsmplr(samp_1)
+samp_5 <- rsmplr(samp_1)
+samp_6 <- rsmplr(samp_1)
+
+plotr <- function(samp_i) {
+  ggplot(as.data.frame(samp_i), aes(samp_i)) +
+    geom_histogram(bins=10) +
+    scale_x_continuous(limits=c(-3,3)) +
+    theme(axis.title.x=element_blank())
+}
+
+plot_s <- plotr(samp_1)
+plot_p <- plotr(samp_2)
+plot_q <- plotr(samp_3)
+plot_r <- plotr(samp_4)
+plot_u <- plotr(samp_5)
+plot_v <- plotr(samp_6)
+
 grid.arrange(plot_s, plot_p, plot_q, plot_r, plot_u, plot_v, ncol = 3)
  
 ```
