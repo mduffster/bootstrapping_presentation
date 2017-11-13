@@ -66,7 +66,7 @@ In our second example of an error distribution, we're forced to consider other m
 OR, since we have the computational power to do so, we can use a resampling method. This is where bootstrapping comes into play. 
 
 ## What is Bootstrapping?
-In statistics, bootstrapping is a resampling method that helps us understand estimates of population statistics, and can measure our confidence in those estimates. If you encounter a situation when you would prefer to ask a question of a population, but can't, and use a sample to answer that question, you should probably consider using bootstrapping to determine the behavior of the statistic and your confidence in that statistic. 
+In statistics, bootstrapping is a resampling method that helps us understand estimates of population statistics, and can measure our confidence in those estimates. Consider a situation when you want to ask a question about a population statistic (what is the mean of this population), but you do not have the full population, or information about the full population. Perhaps you'd take a sample. In this situation, you should consider using bootstrapping to make inferences about the behavior of the statistic, and your confidence with respect to the statistic.
 
 Statistical Bootstrapping assumes that your sample of the population data mimics the behavior of the population data, meaning for some probability distribution $\ J$ our sample distribution $\hat{J}$ is a reasonable approximation of $\ J$.
 
